@@ -1,0 +1,91 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+double a = 5;
+double b = 3;
+double funct;
+double mag;
+double functie(double x, double y);
+double magnitude(double x, double y);
+double functZX(double x, double y, double lambda);
+double functZY(double x, double y, double lambda);
+
+
+int main()
+{
+    double gama = 0.5;
+    double epsilon = pow(10, -6);
+    double delta = 0.06;
+    int k = 0;
+    double lambda = 1;
+    double x = a;
+    double y = b;
+    double zx, zy, fz, fx;
+    double magn = magnitude(x, y);
+      
+       
+
+       
+ while (magnitude(x, y) > epsilon) 
+        {
+        magn = magnitude(x, y);
+        double fx = functie(x, y);
+        cout << "\tk = " << k << "; x = " << x << "; y = " << y << "; f(x) = " << fx << "; Lambda = " << lambda << endl;
+        
+        while (true) //procedura de fractionare a pasului
+        {
+            zx = functZX(x, y, lambda);
+            zy = functZY(x, y, lambda);
+           double fz = functie(zx, zy);
+            if (fz - fx <= -delta * lambda * pow(magnitude(x, y), 2))
+            {
+                x = zx;
+                y = zy;
+                k++;
+                break;
+            }
+            else
+            {
+                cout << "\t\tzx = " << zx << "; zy = " << zy << "; Lambda = " << lambda <<"; Nu s-a satisfacut"<<endl;
+                lambda *= gama;
+                
+            }
+            cout << "______________________________________________________\n";
+        }
+    }
+    
+
+}
+    double functie(double x, double y){
+        double funct;
+        return funct = 5 * pow(x, 2) + 3 * x * y + 3 * pow(y, 2) - 5 * x - 3 * y;
+    }
+
+    double derivX(double x, double y){
+        double derX;
+        return derX = 10 * x + 3 * y - 5;
+
+    }
+
+   
+ 
+double derivY(double x, double y){
+        double derY;
+        return derY = 3 * x + 6 * y - 3;
+    }
+
+    double magnitude(double x, double y){
+        double mag;
+        return mag = sqrt(pow(derivX(x, y), 2) + pow(derivY(x, y), 2));
+    }
+//punctul pretendent
+    double functZX(double x, double y, double lambda){
+        double zx;
+        return zx = x - lambda * derivX(x, y);
+    }
+
+    double functZY(double x, double y, double lambda){
+        double zy;
+        return zy = y - lambda * derivY(x, y);
+    }
