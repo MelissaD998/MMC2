@@ -1,0 +1,102 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+double a = 5;
+double b = 3;
+
+double functia(double x, double y)
+{
+
+    double funct;
+    return funct = 5 * pow(x, 2) + 3 * x * y + 3 * pow(y, 2) - 5 * x - 3 * y;
+}
+
+double derivX(double x, double y)
+{
+
+    double derX;
+
+    return derX = 10 * x + 3 * y - 5;
+}
+
+double derivXX()
+{
+
+    return 10;
+}
+
+double derivXY()
+{
+
+    return 3;
+}
+
+double derivY(double x, double y)
+{
+
+    double derY;
+
+    return derY = 3 * x + 6 * y - 3;
+}
+
+double derivYX()
+{
+
+    return 3;
+}
+
+double derivYY()
+{
+
+    return 6;
+}
+
+double magnitude(double x, double y)
+{
+
+    double mag;
+    return mag = sqrt(pow(derivX(x, y), 2) + pow(derivY(x, y), 2));
+}
+
+
+int main()
+{
+
+    double x = a, y = b;
+    double alpha = 1;
+    int k = 0;
+
+    double fx = functia(x, y);
+    double magn = magnitude(x, y);
+    double devx = derivX(x, y);
+    double devy = derivY(x, y);
+
+    double dx = -devx;
+    double dy = -devy;
+
+    cout << "k = " << k << "\t x = " << x << " \t\t y = " << y << "\t\talpha = " << alpha << "\t\t\tderivata x =  " << devx << "\t    derivata y = " << devy << "\t\t\t\t fx=" << fx << "\t\t\tmagnitudinea= " << magn << endl;
+
+    while (devx != 0 && devy != 0)
+    {
+
+        alpha = -((devx * dx + devy * dy) /
+                  ((derivXX() * dx + derivXY() * dy) * dx +
+                   ((derivYX() * dx + derivYY() * dy) * dy)));
+
+        k++;
+
+        x = x + alpha * dx;
+        y = y + alpha * dy;
+
+        fx = functia(x, y);
+        devx = derivX(x, y);
+        devy = derivY(x, y);
+
+        dx = -devx + (pow(magnitude(x, y), 2) / pow(magn, 2)) * dx;
+        dy = -devy + (pow(magnitude(x, y), 2) / pow(magn, 2)) * dy;
+
+        cout << "k = " << k << "\t x = " << x << "  \t y = " << y << "   alpha = " << alpha << "               derivata x =  " << devx << "     derivata y = " << devy << "\t                 fx=" << fx << "\t\tmagnitudinea= " << magnitude(x,y) << endl;
+    }
+    return 0;
+}
